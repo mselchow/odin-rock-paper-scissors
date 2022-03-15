@@ -1,13 +1,15 @@
+let playerScore = 0, computerScore = 0;
+
 function computerPlay() {
     switch (Math.floor(Math.random() * 3)) {
         case 0:
-            return "Rock";
+            return "rock";
             break;
         case 1:
-            return "Paper";
+            return "paper";
             break;
         case 2:
-            return "Scissors";
+            return "scissors";
             break;
         default:
             console.log("computerPlay returned an unexpected value.");
@@ -20,30 +22,78 @@ function playRound(playerSelection, computerSelection) {
     let computer = computerSelection.toLowerCase();
 
     if (player == computer) {
-        return "It's a tie! You both chose " + player + ".";
+        return "tie";
     } else if (player == "rock") {
-        return computer == "paper" ? "You lose! Paper beats rock." : "You win! Rock beats scissors.";
+        return (computer == "paper") ? "computer" : "player";
     } else if (player == "paper") {
-        return computer == "rock" ? "You win! Paper beats rock." : "You lose! Scissors beats paper.";
+        return (computer == "rock") ? "player" : "computer";
     } else if (player == "scissors") {
-        return computer == "rock" ? "You lose! Rock beats scissors." : "You win! Scissors beats paper.";
+        return (computer == "rock") ? "computer" : "player";
     } else {
         return "playRound returned an unexpected value.";
     }
 }
 
+function showRoundOutcomeMessage(outcome, playerSelection, computerSelection) {
+    switch (outcome) {
+        case "tie":
+            console.log("It's a tie: you both chose " + playerSelection + ".");
+            break;
+        case "player":
+            console.log("You win: " + playerSelection + " beats " + computerSelection);
+            break;
+        case "computer":
+            console.log("You lose: " + computerSelection + " beats " + playerSelection);
+            break;
+        default:
+            break;
+    }
+}
+
 function game() {
-    let userChoice, outcome;
-    let playerScore = 0, computerScore = 0;
+    resetScore();
+
+    let userChoice, computerChoice, outcome;
 
     for (let i = 0; i < 5; i++) {
         console.log("Round " + i + ":");
+
         userChoice = prompt("Please enter your choice of Rock, Paper, or Scissors.");
-        outcome = playRound(userChoice, computerPlay());
-        outcome.includes("win") ? playerScore++ : computerScore++;
-        console.log(outcome);
+        computerChoice = computerPlay();
+
+        outcome = playRound(userChoice, computerChoice);
+        adjustScore(outcome);
+        showRoundOutcomeMessage(outcome, userChoice, computerChoice);
     }
     console.log();
     console.log("SCORE -- Player: " + playerScore + ", Computer: " + computerScore);
     playerScore > computerScore ? console.log("You won!!!") : console.log("You lost...");
+}
+
+function adjustScore(outcome) {
+    switch (outcome) {
+        case "player":
+            increasePlayerScore();
+            break;
+        case "computer":
+            increaseComputerScore();
+            break;
+        case "tie":
+            break;
+        default:
+            break;
+    }
+}
+
+function increasePlayerScore() {
+    playerScore++;
+}
+
+function increaseComputerScore() {
+    computerScore++;
+}
+
+function resetScore() {
+    playerScore = 0;
+    computerScore = 0;
 }
