@@ -66,8 +66,36 @@ function game() {
         showRoundOutcomeMessage(outcome, userChoice, computerChoice);
     }
     console.log();
+    showScoreMessage();
+    showGameOutcomeMessage();
+}
+
+function showScoreMessage() {
     console.log("SCORE -- Player: " + playerScore + ", Computer: " + computerScore);
-    playerScore > computerScore ? console.log("You won!!!") : console.log("You lost...");
+}
+
+function showGameOutcomeMessage() {
+    switch (determineOverallWinner()) {
+        case "tie":
+            console.log("It's a tie!");
+            break;
+        case "player":
+            console.log("You won!!!");
+            break;
+        case "computer":
+            console.log("You lost...");
+            break;
+        default:
+            break;
+    }
+}
+
+function determineOverallWinner() {
+    if (playerScore == computerScore) {
+        return "tie";
+    } else {
+        return (playerScore > computerScore) ? "player" : "computer";
+    }
 }
 
 function adjustScore(outcome) {
