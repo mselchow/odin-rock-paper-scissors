@@ -31,3 +31,19 @@ function playRound(playerSelection, computerSelection) {
         return "playRound returned an unexpected value.";
     }
 }
+
+function game() {
+    let userChoice, outcome;
+    let playerScore = 0, computerScore = 0;
+
+    for (let i = 0; i < 5; i++) {
+        console.log("Round " + i + ":");
+        userChoice = prompt("Please enter your choice of Rock, Paper, or Scissors.");
+        outcome = playRound(userChoice, computerPlay());
+        outcome.includes("win") ? playerScore++ : computerScore++;
+        console.log(outcome);
+    }
+    console.log();
+    console.log("SCORE -- Player: " + playerScore + ", Computer: " + computerScore);
+    playerScore > computerScore ? console.log("You won!!!") : console.log("You lost...");
+}
