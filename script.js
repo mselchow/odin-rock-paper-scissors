@@ -15,7 +15,7 @@ const buttons = document.querySelector(".buttons");
 
 buttons.addEventListener("click", (e) => {
   if (e.target.nodeName !== "BUTTON") return;
-  console.log(playRound(e.target.id, computerPlay()));
+  playGame(e.target.id, computerPlay());
 });
 
 /*
@@ -82,10 +82,16 @@ function adjustScore(outcome) {
 
 function increasePlayerScore() {
   playerScore++;
+
+  const playerScoreText = document.querySelector(".scores .player .score");
+  playerScoreText.textContent = playerScore;
 }
 
 function increaseComputerScore() {
   computerScore++;
+
+  const playerScoreText = document.querySelector(".scores .computer .score");
+  playerScoreText.textContent = computerScore;
 }
 
 function resetScore() {
@@ -93,15 +99,8 @@ function resetScore() {
   computerScore = 0;
 }
 
-function game() {
-  resetScore();
-
-  let userChoice, computerChoice, outcome;
-
-  userChoice = prompt("Please enter your choice of Rock, Paper, or Scissors.");
-  computerChoice = computerPlay();
-
-  outcome = playRound(userChoice, computerChoice);
+function playGame(userChoice, computerChoice) {
+  let outcome = playRound(userChoice, computerChoice);
   adjustScore(outcome);
   showRoundOutcomeMessage(outcome, userChoice, computerChoice);
 
