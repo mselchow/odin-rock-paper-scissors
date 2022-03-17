@@ -57,14 +57,6 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-function determineOverallWinner() {
-  if (playerScore == computerScore) {
-    return "tie";
-  } else {
-    return playerScore > computerScore ? "player" : "computer";
-  }
-}
-
 function adjustScore(outcome) {
   switch (outcome) {
     case "player":
@@ -102,11 +94,9 @@ function resetScore() {
 function playGame(userChoice, computerChoice) {
   let outcome = playRound(userChoice, computerChoice);
   adjustScore(outcome);
-  showRoundOutcomeMessage(outcome, userChoice, computerChoice);
-
-  console.log();
-  showScoreMessage();
-  showGameOutcomeMessage();
+  if (!checkForWinner()) {
+    showRoundOutcomeMessage(outcome, userChoice, computerChoice);
+  }
 }
 
 /*
@@ -114,19 +104,24 @@ function playGame(userChoice, computerChoice) {
  *  Outcome messages functions
  *
  */
+function updateOutcomeText(text) {
+  const container = document.querySelector(".outcome");
+  container.textContent = text;
+}
+
 function showRoundOutcomeMessage(outcome, playerSelection, computerSelection) {
   switch (outcome) {
     case "tie":
-      console.log("It's a tie: you both chose " + playerSelection + ".");
+      updateOutcomeText("It's a tie: you both chose " + playerSelection + ".");
       break;
     case "player":
-      console.log(
-        "You win: " + playerSelection + " beats " + computerSelection
+      updateOutcomeText(
+        "You win: " + playerSelection + " beats " + computerSelection + "."
       );
       break;
     case "computer":
-      console.log(
-        "You lose: " + computerSelection + " beats " + playerSelection
+      updateOutcomeText(
+        "You lose: " + computerSelection + " beats " + playerSelection + "."
       );
       break;
     default:
@@ -134,24 +129,12 @@ function showRoundOutcomeMessage(outcome, playerSelection, computerSelection) {
   }
 }
 
-function showScoreMessage() {
-  console.log(
-    "SCORE -- Player: " + playerScore + ", Computer: " + computerScore
-  );
-}
-
-function showGameOutcomeMessage() {
-  switch (determineOverallWinner()) {
-    case "tie":
-      console.log("It's a tie!");
-      break;
-    case "player":
-      console.log("You won!!!");
-      break;
-    case "computer":
-      console.log("You lost...");
-      break;
-    default:
-      break;
+function checkForWinner() {
+  if (playerScore == 5 || computerScore == 5) {
+    let text = playerScore > computerScore ? "You won!!!" : "You lost...";
+    updateOutcomeText(text);
+    return true;
+  } else {
+    return false;
   }
 }
