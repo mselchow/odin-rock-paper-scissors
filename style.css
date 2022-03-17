@@ -1,0 +1,30 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.scores,
+.player,
+.computer {
+  display: flex;
+}
+
+.scores {
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.player,
+.computer {
+  gap: 8px;
+}
